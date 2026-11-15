@@ -1,0 +1,41 @@
+/**
+ * Farmácia Viva em Rede - Tokens de tema CSS (variáveis globais)
+ */
+
+:root {
+  --cor-primaria: #0C5C3E;
+  --cor-primaria-escura: #084E33;
+  --cor-primaria-suave: #E8F1ED;
+  --cor-secundaria: #A489C5;
+  --cor-acao: #FAA825;
+  --cor-fundo: #F4F8F5;
+  --cor-superficie: #FFFFFF;
+  --cor-texto-principal: #2E4045;
+  --cor-texto-suave: #6B7B80;
+  --cor-borda-suave: #E0E8E4;
+  --raio-borda: 8px;
+  --fonte-titulos: 'Montserrat', sans-serif;
+  --fonte-corpo: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-principal);
+  font-family: var(--fonte-corpo);
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-acao);
+  outline-offset: 2px;
+}

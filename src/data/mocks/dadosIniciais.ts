@@ -1,0 +1,199 @@
+/**
+ * Farmacia Viva em Rede - Dados iniciais mocados para o MVP
+ * Região de referência: entorno do campus IFPE Jaboatão dos Guararapes (PE).
+ * Simula o conteúdo do PostgreSQL enquanto o banco não é integrado.
+ */
+
+import type { Usuario, JardimMedicinal, VisitaAgendada, TopicoForum, ComentarioForum } from '../../core/modelos/entidades';
+
+export const usuariosIniciais: Usuario[] = [
+  {
+    id: 1,
+    nome: 'Maria da Conceição Silva',
+    email: 'maria.conceicao@sms-jaboatao.pe.gov.br',
+    senha_hash: 'hash_simulado',
+    tipo_usuario: 'comum',
+    criado_em: '2024-01-10T08:00:00.000Z',
+  },
+  {
+    id: 2,
+    nome: 'João Batista de Lima',
+    email: 'joao.lima@ifpe.edu.br',
+    senha_hash: 'hash_simulado',
+    tipo_usuario: 'extensionista',
+    criado_em: '2024-01-12T09:30:00.000Z',
+  },
+  {
+    id: 3,
+    nome: 'Ana Patrícia Souza',
+    email: 'ana.patricia@hortopiedade.org.br',
+    senha_hash: 'hash_simulado',
+    tipo_usuario: 'responsavel_jardim',
+    criado_em: '2024-01-15T10:15:00.000Z',
+  },
+  {
+    id: 4,
+    nome: 'Severino Ramos Filho',
+    email: 'severino.ramos@embrapa.br',
+    senha_hash: 'hash_simulado',
+    tipo_usuario: 'extensionista',
+    criado_em: '2024-01-18T14:00:00.000Z',
+  },
+];
+
+export const jardinsIniciais: JardimMedicinal[] = [
+  {
+    id: 1,
+    nome: 'Horto Comunitário Prazeres',
+    extensionista_id: 2,
+    nome_responsavel: 'José Carlos Ferreira',
+    contato_responsavel: '(81) 98888-1201',
+    tipo_jardim: 'publico',
+    endereco: 'Rua da Glória, 120 - Prazeres, Jaboatão dos Guararapes/PE',
+    latitude: -8.1305,
+    longitude: -34.9630,
+    plantas_disponiveis: ['Erva-cidreira', 'Guaco', 'Boldo-brasileiro', 'Alecrim'],
+    aviso_colheita_ativo: true,
+    criado_em: '2024-02-01T10:00:00.000Z',
+  },
+  {
+    id: 2,
+    nome: 'Horto Medicinal Piedade',
+    extensionista_id: 2,
+    nome_responsavel: 'Lucia Maria Santos',
+    contato_responsavel: '(81) 97777-2302',
+    tipo_jardim: 'publico',
+    endereco: 'Avenida Barreto de Menezes, 4120 - Piedade, Jaboatão dos Guararapes/PE',
+    latitude: -8.1548,
+    longitude: -34.9395,
+    plantas_disponiveis: ['Capim-santo', 'Hortelã', 'Manjericão', 'Boldo-brasileiro'],
+    aviso_colheita_ativo: false,
+    criado_em: '2024-02-10T11:30:00.000Z',
+  },
+  {
+    id: 3,
+    nome: 'Horta Comunitária Cavaleiro',
+    extensionista_id: 4,
+    nome_responsavel: 'Francisco de Assis',
+    contato_responsavel: '(81) 96666-3403',
+    tipo_jardim: 'particular',
+    endereco: 'Rua do Cavaleiro, 350 - Cavaleiro, Jaboatão dos Guararapes/PE',
+    latitude: -8.0882,
+    longitude: -34.9485,
+    plantas_disponiveis: ['Erva-cidreira', 'Camomila', 'Alecrim'],
+    aviso_colheita_ativo: true,
+    criado_em: '2024-02-18T09:15:00.000Z',
+  },
+  {
+    id: 4,
+    nome: 'Jardim Medicinal Jaboatão Centro',
+    extensionista_id: 2,
+    nome_responsavel: 'Ricardo Mendonça',
+    contato_responsavel: '(81) 95555-4504',
+    tipo_jardim: 'publico',
+    endereco: 'Avenida Mascarenhas de Morais, 980 - Jaboatão Centro, Jaboatão dos Guararapes/PE',
+    latitude: -8.1108,
+    longitude: -35.0135,
+    plantas_disponiveis: ['Guaco', 'Capim-santo', 'Hortelã', 'Boldo-brasileiro', 'Erva-cidreira'],
+    aviso_colheita_ativo: false,
+    criado_em: '2024-03-02T15:45:00.000Z',
+  },
+  {
+    id: 5,
+    nome: 'Horto Medicinal Curado',
+    extensionista_id: 4,
+    nome_responsavel: 'Cláudia Regina Oliveira',
+    contato_responsavel: '(81) 94444-5605',
+    tipo_jardim: 'particular',
+    endereco: 'Rua do Curado, 210 - Curado, Jaboatão dos Guararapes/PE',
+    latitude: -8.1005,
+    longitude: -34.9812,
+    plantas_disponiveis: ['Manjericão', 'Alecrim', 'Camomila'],
+    aviso_colheita_ativo: false,
+    criado_em: '2024-03-12T08:20:00.000Z',
+  },
+  {
+    id: 6,
+    nome: 'Horto Comunitário Barra de Jangada',
+    extensionista_id: 2,
+    nome_responsavel: 'Antônio Jorge Santana',
+    contato_responsavel: '(81) 93333-6706',
+    tipo_jardim: 'publico',
+    endereco: 'Avenida Beira Mar, 1250 - Barra de Jangada, Jaboatão dos Guararapes/PE',
+    latitude: -8.1895,
+    longitude: -34.9255,
+    plantas_disponiveis: ['Guaco', 'Erva-cidreira', 'Hortelã', 'Capim-santo'],
+    aviso_colheita_ativo: true,
+    criado_em: '2024-03-20T13:10:00.000Z',
+  },
+];
+
+export const comentariosIniciais: ComentarioForum[] = [
+  {
+    id: 1,
+    topico_id: 1,
+    usuario_id: 1,
+    usuario_nome: 'Maria da Conceição Silva',
+    conteudo: 'Excelente iniciativa! Acompanho o horto de Prazeres desde o início e as orientações dos extensionistas do IFPE são sempre muito cuidadosas.',
+    badges_atribuidas: ['lider_comunitaria'],
+    criado_em: '2024-03-05T10:00:00.000Z',
+  },
+  {
+    id: 2,
+    topico_id: 1,
+    usuario_id: 2,
+    usuario_nome: 'João Batista de Lima',
+    conteudo: 'Obrigado pelo reconhecimento. Nosso objetivo é fortalecer as redes colaborativas entre comunidades da RMR e os serviços de saúde de Jaboatão.',
+    badges_atribuidas: [],
+    criado_em: '2024-03-05T11:30:00.000Z',
+  },
+  {
+    id: 3,
+    topico_id: 2,
+    usuario_id: 3,
+    usuario_nome: 'Ana Patrícia Souza',
+    conteudo: 'Compartilhando a dica de cultivo: o boldo-brasileiro responde muito bem ao sol da manhã e ao solo drenado no litoral pernambucano.',
+    badges_atribuidas: ['mestre_do_cultivo'],
+    criado_em: '2024-03-08T14:20:00.000Z',
+  },
+];
+
+export const topicosIniciais: TopicoForum[] = [
+  {
+    id: 1,
+    usuario_id: 2,
+    titulo: 'Como iniciar um horto medicinal comunitário em Jaboatão',
+    descricao: 'Vamos conversar sobre os passos essenciais: levantamento de demandas, capacitação de agentes de saúde e escolha das espécies adaptadas ao clima quente e úmido da RMR.',
+    imagens: [],
+    criado_em: '2024-03-04T09:00:00.000Z',
+    comentarios: comentariosIniciais.filter((c) => c.topico_id === 1),
+  },
+  {
+    id: 2,
+    usuario_id: 3,
+    titulo: 'Manejo do boldo-brasileiro no litoral pernambucano',
+    descricao: 'Compartilho aqui algumas orientações sobre solo, irrigação e colheita do boldo-brasileiro para uso seguro na atenção básica.',
+    imagens: [],
+    criado_em: '2024-03-07T09:00:00.000Z',
+    comentarios: comentariosIniciais.filter((c) => c.topico_id === 2),
+  },
+];
+
+export const visitasIniciais: VisitaAgendada[] = [
+  {
+    id: 1,
+    jardim_id: 1,
+    usuario_id: 1,
+    data_horario: '2024-04-15T09:00:00.000Z',
+    status: 'confirmado',
+    criado_em: '2024-03-10T10:00:00.000Z',
+  },
+  {
+    id: 2,
+    jardim_id: 3,
+    usuario_id: 1,
+    data_horario: '2024-04-20T14:30:00.000Z',
+    status: 'pendente',
+    criado_em: '2024-03-15T11:00:00.000Z',
+  },
+];
