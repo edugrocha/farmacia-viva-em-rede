@@ -42,7 +42,7 @@ Esta é a versão MVP (Produto Mínimo Viável) do projeto, com o backend totalm
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/farmacia-viva-em-rede.git
+git clone https://github.com/edugrocha/farmacia-viva-em-rede.git
 ```
 
 2. Acesse a pasta do projeto:
