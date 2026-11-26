@@ -1,17 +1,28 @@
 /**
- * Farmácia Viva em Rede - Página de detalhes de um jardim específico
+ * Farmácia Viva em Rede — Página de Detalhes do Jardim
+ *
+ * Layout mobile-first (coluna única) com seção expandível por espécie.
+ * Cada planta disponível no jardim pode ter seus dados botânicos detalhados
+ * exibidos via InformacoesEspecie quando um slug correspondente existe no mock.
  */
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { repositorioJardins } from '../data/repositorios';
+import { buscarEspeciePorSlug } from '../data/mocks/especiesMock';
 import { MapaLeaflet } from '../components/mapa/MapaLeaflet';
 import { Cartao } from '../components/ui/Cartao';
 import { Cracha } from '../components/ui/Cracha';
 import { Botao } from '../components/ui/Botao';
+import { InformacoesEspecie } from '../components/especies';
 import { ModalAgendarVisita } from '../components/visitas/ModalAgendarVisita';
-import { CORES } from '../core/tema/tokens';
+import { CORES, FONTES, RAIO_BORDA } from '../core/tema/tokens';
 import type { JardimMedicinal } from '../core/modelos/entidades';
+import type { EspeciePlanta } from '../core/modelos/entidades';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Componente
+// ─────────────────────────────────────────────────────────────────────────────
 
 export const PaginaJardimDetalhes: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +32,7 @@ export const PaginaJardimDetalhes: React.FC = () => {
   const [carregando, setCarregando] = useState(true);
   const [modalVisitaAberto, setModalVisitaAberto] = useState(false);
   const [mensagemSucesso, setMensagemSucesso] = useState('');
+  const [especieSelecionada, setEspecieSelecionada] = useState<EspeciePlanta | null>(null);
 
   useEffect(() => {
     const carregar = async () => {
@@ -34,12 +46,15 @@ export const PaginaJardimDetalhes: React.FC = () => {
         setCarregando(false);
       }
     };
-
     carregar();
   }, [id]);
 
   if (carregando) {
-    return <p>Carregando detalhes do jardim...</p>;
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center', color: CORES.textoSuave }}>
+        Carregando detalhes do jardim…
+      </div>
+    );
   }
 
   if (!jardim) {
@@ -53,40 +68,48 @@ export const PaginaJardimDetalhes: React.FC = () => {
     );
   }
 
+  // Resolve espécies com dados botânicos disponíveis
+  const slugsCatalogados: string[] = jardim.especies_slugs ?? [];
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      {/* ── Banner de sucesso ─────────────────────────────────────────────── */}
       {mensagemSucesso && (
         <div
           role="status"
+          aria-live="polite"
           style={{
             padding: '0.75rem',
-            borderRadius: '8px',
+            borderRadius: RAIO_BORDA,
             backgroundColor: '#E8F1ED',
             color: '#0C5C3E',
             fontWeight: 600,
+            fontFamily: FONTES.corpo,
           }}
         >
           {mensagemSucesso}
         </div>
       )}
 
+      {/* ── Cabeçalho ────────────────────────────────────────────────────── */}
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-start',
           flexWrap: 'wrap',
-          gap: '1rem',
+          gap: '0.75rem',
         }}
       >
         <div>
           <Cracha variante="primaria">Detalhes do Jardim</Cracha>
           <h1
             style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontSize: '1.5rem',
+              fontFamily: FONTES.titulos,
+              fontSize: 'clamp(1.1rem, 5vw, 1.5rem)',
               fontWeight: 700,
-              marginTop: '0.5rem',
+              color: CORES.textoPrincipal,
+              marginTop: '0.4rem',
               marginBottom: 0,
             }}
           >
@@ -95,7 +118,7 @@ export const PaginaJardimDetalhes: React.FC = () => {
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <Botao variante="contorno" onClick={() => navegar('/jardins')}>
-            Voltar
+            ← Voltar
           </Botao>
           <Botao variante="acao" onClick={() => setModalVisitaAberto(true)}>
             Agendar Visita
@@ -103,74 +126,111 @@ export const PaginaJardimDetalhes: React.FC = () => {
         </div>
       </div>
 
+      {/* ── Grid: info + mapa ─────────────────────────────────────────────── */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '1.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+          gap: '1.25rem',
         }}
       >
+        {/* Informações do Jardim */}
         <Cartao>
-          <h3
-            style={{
-              marginTop: 0,
-              fontFamily: "'Montserrat', sans-serif",
-              color: CORES.primaria,
-            }}
-          >
-            Informações do Jardim
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
-            <div>
-              <strong>Responsável:</strong> {jardim.nome_responsavel}
-            </div>
-            <div>
-              <strong>Contato:</strong> {jardim.contato_responsavel}
-            </div>
-            <div>
-              <strong>Endereço:</strong> {jardim.endereco}
-            </div>
-            <div>
-              <strong>Tipo:</strong>{' '}
-              {jardim.tipo_jardim === 'publico' ? 'Público' : 'Particular'}
-            </div>
-            <div>
-              <strong>Latitude:</strong> {jardim.latitude}
-            </div>
-            <div>
-              <strong>Longitude:</strong> {jardim.longitude}
-            </div>
-            {jardim.aviso_colheita_ativo && (
+          <SectionHeader>Informações do Jardim</SectionHeader>
+          <InfoList>
+            <InfoItem label="Responsável" valor={jardim.nome_responsavel} />
+            <InfoItem label="Contato" valor={jardim.contato_responsavel} />
+            <InfoItem label="Endereço" valor={jardim.endereco} />
+            <InfoItem
+              label="Tipo"
+              valor={jardim.tipo_jardim === 'publico' ? 'Público' : 'Particular'}
+            />
+          </InfoList>
+          {jardim.aviso_colheita_ativo && (
+            <div style={{ marginTop: '0.75rem' }}>
               <Cracha variante="acao">Colheita Ativa</Cracha>
-            )}
-          </div>
-
-          <h4
-            style={{
-              marginTop: '1rem',
-              marginBottom: '0.5rem',
-              fontFamily: "'Montserrat', sans-serif",
-            }}
-          >
-            Plantas Disponíveis
-          </h4>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-            {jardim.plantas_disponiveis.map((planta, indice) => (
-              <Cracha key={`${jardim.id}-planta-${indice}`} variante="neutra">
-                {planta}
-              </Cracha>
-            ))}
-          </div>
+            </div>
+          )}
         </Cartao>
 
+        {/* Mapa */}
         <MapaLeaflet
           jardins={[jardim]}
           coordenadasUsuario={null}
-          altura="380px"
+          altura="320px"
           aoSolicitarVisita={() => setModalVisitaAberto(true)}
         />
       </div>
 
+      {/* ── Espécies disponíveis ──────────────────────────────────────────── */}
+      <Cartao>
+        <SectionHeader>Espécies Disponíveis</SectionHeader>
+        <p style={{ fontSize: '0.82rem', color: CORES.textoSuave, margin: '0 0 0.75rem', fontFamily: FONTES.corpo }}>
+          Selecione uma espécie para ver informações botânicas detalhadas.
+        </p>
+
+        {/* Grade de chips clicáveis */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1rem' }}>
+          {jardim.plantas_disponiveis.map((planta, idx) => {
+            const slug = slugsCatalogados[idx];
+            const especie = buscarEspeciePorSlug(slug);
+            const ativa = especieSelecionada?.slug === slug;
+
+            return (
+              <button
+                key={`${jardim.id}-planta-${idx}`}
+                onClick={() => {
+                  if (!especie) return;
+                  setEspecieSelecionada(ativa ? null : especie);
+                }}
+                style={{
+                  all: 'unset',
+                  boxSizing: 'border-box',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.4rem 0.9rem',
+                  borderRadius: RAIO_BORDA,
+                  fontFamily: FONTES.corpo,
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
+                  cursor: especie ? 'pointer' : 'default',
+                  border: `2px solid ${ativa ? CORES.primaria : CORES.bordaForte}`,
+                  backgroundColor: ativa ? CORES.primariaSuave : CORES.superficie,
+                  color: ativa ? CORES.primaria : CORES.textoPrincipal,
+                  transition: 'all 0.15s ease',
+                }}
+                aria-pressed={ativa}
+                aria-label={`${planta}${especie ? ' — ver informações botânicas' : ' — sem dados botânicos disponíveis'}`}
+                title={especie ? 'Ver informações botânicas' : 'Dados botânicos não disponíveis ainda'}
+              >
+                {planta}
+                {especie ? (
+                  <span style={{ fontSize: '0.7rem', opacity: 0.7 }}>{ativa ? '▲' : '▼'}</span>
+                ) : (
+                  <span style={{ fontSize: '0.65rem', color: CORES.textoSuave }}>(em breve)</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Painel de informações da espécie selecionada */}
+        {especieSelecionada && (
+          <div
+            style={{
+              borderTop: `1px solid ${CORES.bordaSuave}`,
+              paddingTop: '1rem',
+              animation: 'fadeIn 0.2s ease',
+            }}
+          >
+            <InformacoesEspecie especie={especieSelecionada} />
+          </div>
+        )}
+      </Cartao>
+
+      {/* Modal de agendamento */}
       <ModalAgendarVisita
         aberto={modalVisitaAberto}
         aoFechar={() => setModalVisitaAberto(false)}
@@ -184,3 +244,34 @@ export const PaginaJardimDetalhes: React.FC = () => {
     </div>
   );
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Micro-componentes locais
+// ─────────────────────────────────────────────────────────────────────────────
+
+const SectionHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <h3
+    style={{
+      fontFamily: FONTES.titulos,
+      fontSize: '1rem',
+      fontWeight: 700,
+      color: CORES.primaria,
+      margin: '0 0 0.75rem',
+    }}
+  >
+    {children}
+  </h3>
+);
+
+const InfoList: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <dl style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>{children}</dl>
+);
+
+const InfoItem: React.FC<{ label: string; valor: string }> = ({ label, valor }) => (
+  <div style={{ display: 'flex', gap: '0.4rem', fontSize: '0.88rem', fontFamily: FONTES.corpo }}>
+    <dt style={{ fontWeight: 600, color: CORES.textoPrincipal, minWidth: '7rem', flexShrink: 0 }}>
+      {label}:
+    </dt>
+    <dd style={{ margin: 0, color: CORES.textoSuave }}>{valor}</dd>
+  </div>
+);

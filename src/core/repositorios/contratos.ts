@@ -60,3 +60,8 @@ export interface IRepositorioForum {
   adicionarComentario(comentario: CriarComentarioDTO): Promise<ComentarioForum>;
   listarComentariosPorTopico(topicoId: number): Promise<ComentarioForum[]>;
 }
+
+export interface IRepositorioImagensEspecies {
+  /** Retorna os caminhos públicos das fotos da espécie (ex.: /assets/plants/{slug}/*.jpg). */
+  obterFotosEspecie(slug: string): Promise<string[]>;
+}

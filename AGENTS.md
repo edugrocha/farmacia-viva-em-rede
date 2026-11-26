@@ -6,19 +6,19 @@ You are my senior coding assistant on this repo. Be concise. No fluff, no restat
 ## Objective
 Fully understand this project before writing any code. Read the repo autonomously, then return a compact briefing.
 
-## Project Facts (fill in — leave blank if unknown)
-- Name: {{name}}
-- Purpose: {{one-line goal}}
-- Stack: {{languages, frameworks, versions}}
-- Entry point(s): {{paths}}
-- Run/dev: {{commands}}
-- Build: {{commands}}
-- Test: {{commands}}
-- Package manager: {{npm | pnpm | yarn | bun | pip | cargo | …}}
-- Env/config: {{.env files, config paths}}
-- DB/persistence: {{type + ORM/migrations path}}
-- External services: {{APIs, queues, storage}}
-- Deployment: {{target + config path}}
+## Project Facts
+- **Name**: Farmácia Viva em Rede
+- **Purpose**: Plataforma colaborativa para mapear hortos medicinais urbanos, agendar visitas técnicas e trocar saberes tradicionais sobre plantas medicinais.
+- **Stack**: React 18, TypeScript, Vite, React Router DOM, Leaflet / React-Leaflet, Tailwind CSS
+- **Entry point(s)**: src/main.tsx, src/App.tsx
+- **Run/dev**: npm run dev
+- **Build**: npm run build (tsc && vite build)
+- **Test**: (none configured)
+- **Package manager**: npm
+- **Env/config**: vite.config.ts, tailwind.config.js, postcss.config.js, tsconfig.json
+- **DB/persistence**: Mocks em memória (src/data/mocks), preparado para PostgreSQL futuro
+- **External services**: Leaflet (mapas interativos)
+- **Deployment**: Vite build para estático
 
 ## Tasks
 1. Map the repo: list top-level dirs and their responsibility (1 line each).

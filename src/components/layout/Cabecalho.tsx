@@ -59,7 +59,7 @@ export const Cabecalho: React.FC = () => {
             }}
           >
             <img
-              src="/logo.png"
+              src="/assets/brand/logo.png"
               alt="Logo Farmácia Viva em Rede"
               style={{
                 height: '42px',

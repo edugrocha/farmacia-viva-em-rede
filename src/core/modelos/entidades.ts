@@ -3,6 +3,99 @@
  * Preparado para mapeamento direto com tabelas relacionais do PostgreSQL.
  */
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Espécie Vegetal (Species Information)
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Ciclo de desenvolvimento da planta */
+export type CicloDesenvolvimento = 'anual' | 'bianual' | 'perene';
+
+/** Método de propagação */
+export type MetodoPropagacao =
+  | 'sementes'
+  | 'estaquia'
+  | 'divisao_touceira'
+  | 'rizomas'
+  | 'estoloes'
+  | 'enxertia'
+  | 'mergulhia'
+  | 'microestaquia';
+
+/** Partes utilizadas da planta */
+export type ParteUtilizada =
+  | 'folhas'
+  | 'flores'
+  | 'frutos'
+  | 'raizes'
+  | 'cascas'
+  | 'sementes'
+  | 'rizomas'
+  | 'resina'
+  | 'latex'
+  | 'óleo_essencial';
+
+/**
+ * Entidade de Espécie Vegetal — enriquecida com dados botânicos, agronômicos
+ * e de identificação visual.
+ * Tabela PostgreSQL futura: especies_plantas
+ */
+export interface EspeciePlanta {
+  /** Slug único da espécie, e.g. "erva-cidreira" (usado no path de imagens) */
+  slug: string;
+
+  // ── Nomenclatura ──────────────────────────────────────────────────────────
+  nome_popular: string;
+  /** Nome científico atualizado (sinonímia incluída quando relevante) */
+  nome_cientifico: string;
+  /** Sinonímias botânicas, se houver */
+  sinonimias?: string[];
+  familia_botanica: string;
+
+  // ── Distribuição geográfica ───────────────────────────────────────────────
+  origem: string;
+  distribuicao_geografica: string;
+
+  // ── Morfologia simplificada (ID em campo) ─────────────────────────────────
+  morfologia: {
+    habito: string;        // ex.: "erva rasteira perene, até 60 cm"
+    folhas: string;
+    flores?: string;
+    frutos?: string;
+    raiz?: string;
+    aroma?: string;
+  };
+
+  // ── Uso medicinal ─────────────────────────────────────────────────────────
+  partes_utilizadas: ParteUtilizada[];
+
+  // ── Agronomia ─────────────────────────────────────────────────────────────
+  ciclo_desenvolvimento: CicloDesenvolvimento;
+  metodos_propagacao: MetodoPropagacao[];
+  requisitos_climaticos: {
+    temperatura_min_c: number;
+    temperatura_max_c: number;
+    precipitacao_descricao: string;
+    tolerancia_seca?: boolean;
+    exposicao_solar: 'pleno_sol' | 'meia_sombra' | 'sombra';
+  };
+  requisitos_edaficos: {
+    tipo_solo: string;
+    ph_min: number;
+    ph_max: number;
+    drenagem: 'boa' | 'moderada' | 'mal_drenado';
+    fertilidade: 'alta' | 'media' | 'baixa';
+  };
+  epoca_plantio: string;
+  epoca_colheita: string;
+  potencial_produtivo: string;
+
+  // ── Galeria fotográfica ────────────────────────────────────────────────────
+  /** Fotos da espécie (imagens de porte/hábito): /assets/plants/{slug}/{arquivo}.{ext} */
+  fotos: string[];
+}
+
 /**
  * Papéis de usuário no sistema (Enum no PostgreSQL: tipo_usuario_enum)
  */
@@ -59,6 +152,11 @@ export interface JardimMedicinal {
   latitude: number;
   longitude: number;
   plantas_disponiveis: string[];
+  /**
+   * Slugs das espécies presentes no jardim.
+   * Referencia EspeciePlanta.slug — JOIN futuro com tabela especies_plantas.
+   */
+  especies_slugs?: string[];
   aviso_colheita_ativo: boolean;
   criado_em: string;
 }

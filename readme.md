@@ -24,7 +24,7 @@ Esta é a versão MVP (Produto Mínimo Viável) do projeto, com o backend totalm
 - **Vite:** Ferramenta de build e servidor de desenvolvimento rápido.
 - **React Router DOM:** Gerenciamento de rotas da aplicação.
 - **Leaflet / React-Leaflet:** Renderização do mapa interativo.
-- **CSS Modules / Estilização Inline:** Aplicação estrita do Design System do projeto.
+- **Estilização Inline:** Design System do projeto aplicado via estilos inline e Tailwind CSS.
 
 ## Padrões e Regras do Projeto
 
