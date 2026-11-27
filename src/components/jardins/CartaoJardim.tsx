@@ -44,6 +44,8 @@ export const CartaoJardim: React.FC<CartaoJardimProps> = ({
             fontWeight: 700,
             color: CORES.primaria,
             lineHeight: 1.35,
+            minWidth: 0,
+            overflowWrap: 'break-word',
           }}
         >
           {jardim.nome}
@@ -59,7 +61,7 @@ export const CartaoJardim: React.FC<CartaoJardimProps> = ({
         </div>
       )}
 
-      <div style={{ fontSize: '0.85rem', color: CORES.textoPrincipal, lineHeight: 1.6 }}>
+      <div style={{ fontSize: '0.85rem', color: CORES.textoPrincipal, lineHeight: 1.6, overflowWrap: 'break-word' }}>
         <div>
           <strong>Responsável:</strong> {jardim.nome_responsavel}
         </div>

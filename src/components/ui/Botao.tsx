@@ -55,7 +55,7 @@ const ESTILOS_TAMANHOS: Record<NonNullable<BotaoProps['tamanho']>, React.CSSProp
   },
   medio: {
     padding: '0.75rem 1.5rem',
-    fontSize: '0.9rem',
+    fontSize: '0.85rem',
   },
   grande: {
     padding: '1rem 2rem',
@@ -84,6 +84,7 @@ export const Botao: React.FC<BotaoProps> = ({
         fontFamily: "'Inter', sans-serif",
         fontWeight: 600,
         cursor: disabled ? 'not-allowed' : 'pointer',
+        minHeight: '44px',
         opacity: disabled ? 0.6 : 1,
         width: larguraTotal ? '100%' : 'auto',
         display: 'inline-flex',

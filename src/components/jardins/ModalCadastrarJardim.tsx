@@ -10,6 +10,7 @@ import { Cartao } from '../ui/Cartao';
 import { CORES, RAIO_BORDA, SOMBRAS } from '../../core/tema/tokens';
 import { repositorioJardins } from '../../data/repositorios';
 import type { JardimMedicinal, TipoJardim } from '../../core/modelos/entidades';
+import { useDialogA11y } from '../../core/tema/useDialogA11y';
 
 export interface ModalCadastrarJardimProps {
   aberto: boolean;
@@ -33,6 +34,8 @@ export const ModalCadastrarJardim: React.FC<ModalCadastrarJardimProps> = ({
   const [avisoColheita, setAvisoColheita] = useState(false);
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
+
+  const dialogRef = useDialogA11y<HTMLDivElement>(aoFechar, aberto);
 
   if (!aberto) return null;
 
@@ -97,6 +100,7 @@ export const ModalCadastrarJardim: React.FC<ModalCadastrarJardimProps> = ({
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="titulo-modal-cadastro-jardim"
@@ -129,7 +133,7 @@ export const ModalCadastrarJardim: React.FC<ModalCadastrarJardimProps> = ({
               style={{
                 margin: '0.5rem 0 0',
                 fontFamily: "'Montserrat', sans-serif",
-                fontSize: '1.25rem',
+                fontSize: '1.15rem',
                 color: CORES.primaria,
               }}
             >
@@ -206,7 +210,7 @@ export const ModalCadastrarJardim: React.FC<ModalCadastrarJardimProps> = ({
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              fontSize: '0.9rem',
+              fontSize: '0.85rem',
               color: CORES.textoPrincipal,
               cursor: 'pointer',
             }}

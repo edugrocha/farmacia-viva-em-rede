@@ -98,7 +98,7 @@ const SectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   <h3
     style={{
       fontFamily: FONTES.titulos,
-      fontSize: '0.9rem',
+      fontSize: '0.85rem',
       fontWeight: 700,
       color: CORES.primaria,
       margin: '0 0 0.75rem',

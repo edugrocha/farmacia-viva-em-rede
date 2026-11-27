@@ -20,7 +20,7 @@ export const CORES = {
   fundo: '#F4F8F5',
   superficie: '#FFFFFF',
   textoPrincipal: '#2E4045',
-  textoSuave: '#6B7B80',
+  textoSuave: '#5A6B70',
   bordaSuave: '#E0E8E4',
   bordaForte: '#CBD8D2',
   erro: '#B3261E',

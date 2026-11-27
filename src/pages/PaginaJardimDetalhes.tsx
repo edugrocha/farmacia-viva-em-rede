@@ -14,6 +14,7 @@ import { MapaLeaflet } from '../components/mapa/MapaLeaflet';
 import { Cartao } from '../components/ui/Cartao';
 import { Cracha } from '../components/ui/Cracha';
 import { Botao } from '../components/ui/Botao';
+import { BrotoBotanico } from '../components/ui/BrotoBotanico';
 import { InformacoesEspecie } from '../components/especies';
 import { ModalAgendarVisita } from '../components/visitas/ModalAgendarVisita';
 import { CORES, FONTES, RAIO_BORDA } from '../core/tema/tokens';
@@ -81,13 +82,17 @@ export const PaginaJardimDetalhes: React.FC = () => {
           style={{
             padding: '0.75rem',
             borderRadius: RAIO_BORDA,
-            backgroundColor: '#E8F1ED',
-            color: '#0C5C3E',
+            backgroundColor: CORES.primariaSuave,
+            color: CORES.primaria,
             fontWeight: 600,
             fontFamily: FONTES.corpo,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
           }}
         >
-          {mensagemSucesso}
+          <BrotoBotanico />
+          <span>{mensagemSucesso}</span>
         </div>
       )}
 
@@ -209,7 +214,7 @@ export const PaginaJardimDetalhes: React.FC = () => {
                 {especie ? (
                   <span style={{ fontSize: '0.7rem', opacity: 0.7 }}>{ativa ? '▲' : '▼'}</span>
                 ) : (
-                  <span style={{ fontSize: '0.65rem', color: CORES.textoSuave }}>(em breve)</span>
+                  <span style={{ fontSize: '0.7rem', color: CORES.textoSuave }}>(em breve)</span>
                 )}
               </button>
             );

@@ -17,7 +17,7 @@ export const WidgetFlutuanteMobile: React.FC = () => {
         aria-label="Baixar aplicativo móvel"
         style={{
           position: 'fixed',
-          bottom: '1.25rem',
+          bottom: 'calc(1.25rem + env(safe-area-inset-bottom))',
           left: '1.25rem',
           zIndex: 10000,
           width: '56px',
@@ -59,7 +59,7 @@ export const WidgetFlutuanteMobile: React.FC = () => {
           aria-label="Download do aplicativo móvel"
           style={{
             position: 'fixed',
-            bottom: '6.5rem',
+            bottom: 'calc(6.5rem + env(safe-area-inset-bottom))',
             left: '1.25rem',
             zIndex: 10000,
             width: 'min(320px, calc(100vw - 2.5rem))',
@@ -91,7 +91,7 @@ export const WidgetFlutuanteMobile: React.FC = () => {
               style={{
                 background: 'none',
                 border: 'none',
-                fontSize: '1.25rem',
+                fontSize: '1.15rem',
                 cursor: 'pointer',
                 color: CORES.textoPrincipal,
                 lineHeight: 1,

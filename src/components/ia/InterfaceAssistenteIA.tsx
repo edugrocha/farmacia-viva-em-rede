@@ -144,7 +144,7 @@ export const InterfaceAssistenteIA: React.FC = () => {
                       ? CORES.primariaSuave
                       : CORES.superficie,
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   lineHeight: 1.45,
                 }}
               >

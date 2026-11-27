@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { repositorioForum } from '../data/repositorios';
 import { VisualizacaoForum } from '../components/forum/VisualizacaoForum';
 import { Cracha } from '../components/ui/Cracha';
+import { CORES } from '../core/tema/tokens';
 import type { TopicoForum } from '../core/modelos/entidades';
 
 export const PaginaForum: React.FC = () => {
@@ -43,13 +44,13 @@ export const PaginaForum: React.FC = () => {
         >
           Fórum Interativo
         </h1>
-        <p style={{ color: '#6B7B80', marginTop: '0.5rem' }}>
+        <p style={{ color: CORES.textoSuave, marginTop: '0.5rem' }}>
           Espaço de diálogo entre agentes de saúde, extensionistas e membros da comunidade.
         </p>
       </div>
 
       {carregando ? (
-        <p style={{ color: '#6B7B80' }}>Carregando discussões...</p>
+        <p style={{ color: CORES.textoSuave }}>Carregando tópicos do fórum...</p>
       ) : (
         <VisualizacaoForum topicosIniciais={topicos} />
       )}

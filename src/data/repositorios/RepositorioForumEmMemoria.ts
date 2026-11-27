@@ -101,6 +101,6 @@ export class RepositorioForumEmMemoria implements IRepositorioForum {
     const usuario = this.dependenciasUsuarios
       ? await this.dependenciasUsuarios.buscarPorId(topico.usuario_id)
       : null;
-    return { ...topico, usuario: usuario ?? undefined };
+    return { ...topico, comentarios: [...topico.comentarios], usuario: usuario ?? undefined };
   }
 }

@@ -81,11 +81,12 @@ export const VisualizacaoForum: React.FC<VisualizacaoForumProps> = ({ topicosIni
                     fontFamily: "'Montserrat', sans-serif",
                     fontSize: '1.1rem',
                     color: CORES.primaria,
+                    overflowWrap: 'break-word',
                   }}
                 >
                   {topico.titulo}
                 </h3>
-                <p style={{ margin: 0, lineHeight: 1.6 }}>{topico.descricao}</p>
+                <p style={{ margin: 0, lineHeight: 1.6, overflowWrap: 'break-word' }}>{topico.descricao}</p>
 
                 <div
                   style={{

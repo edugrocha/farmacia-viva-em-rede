@@ -5,14 +5,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CORES } from '../../core/tema/tokens';
+import { useIsMobile } from '../../core/tema/useMediaQuery';
 
 export const Rodape: React.FC = () => {
+  const isMobile = useIsMobile();
   return (
     <footer
       style={{
         backgroundColor: CORES.textoPrincipal,
         color: CORES.fundo,
-        padding: '2rem 1.5rem',
+        padding: isMobile ? '1.5rem 1rem' : '2rem 1.5rem',
       }}
     >
       <div

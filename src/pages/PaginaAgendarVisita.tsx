@@ -9,6 +9,7 @@ import { repositorioJardins } from '../data/repositorios';
 import { CartaoJardim } from '../components/jardins/CartaoJardim';
 import { ModalAgendarVisita } from '../components/visitas/ModalAgendarVisita';
 import { Cracha } from '../components/ui/Cracha';
+import { BrotoBotanico } from '../components/ui/BrotoBotanico';
 import { CORES } from '../core/tema/tokens';
 import type { JardimMedicinal } from '../core/modelos/entidades';
 
@@ -74,7 +75,7 @@ export const PaginaAgendarVisita: React.FC = () => {
             marginBottom: 0,
           }}
         >
-          Agendar Visitas
+          Agendar Visita
         </h1>
         <p style={{ color: CORES.textoSuave, marginTop: '0.5rem' }}>
           Escolha um jardim disponível e solicite uma visita técnica ou mudas diretamente pelo botão abaixo.
@@ -87,13 +88,17 @@ export const PaginaAgendarVisita: React.FC = () => {
           style={{
             padding: '0.75rem',
             borderRadius: '8px',
-            backgroundColor: '#E8F1ED',
-            color: '#0C5C3E',
+            backgroundColor: CORES.primariaSuave,
+            color: CORES.primaria,
             marginBottom: '1rem',
             fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
           }}
         >
-          {mensagemSucesso}
+          <BrotoBotanico />
+          <span>{mensagemSucesso}</span>
         </div>
       )}
 

@@ -1,6 +1,6 @@
 /**
  * Farmácia Viva em Rede - Página Principal (Início)
- * Apresenta missão, dashboard, mapa interativo e formulário de contato.
+ * Apresenta indicadores, mapa interativo e formulário de contato.
  */
 
 import React, { useEffect, useState } from 'react';
@@ -17,7 +17,9 @@ import { SecaoHero } from '../components/layout/SecaoHero';
 import { MapaLeaflet } from '../components/mapa/MapaLeaflet';
 import { Cartao } from '../components/ui/Cartao';
 import { Cracha } from '../components/ui/Cracha';
+import { Botao } from '../components/ui/Botao';
 import { FormularioContatoExtensionista } from '../components/contato/FormularioContatoExtensionista';
+import { CORES } from '../core/tema/tokens';
 
 
 export const PaginaInicio: React.FC = () => {
@@ -26,23 +28,27 @@ export const PaginaInicio: React.FC = () => {
   const [jardins, setJardins] = useState<JardimMedicinal[]>([]);
   const [visitas, setVisitas] = useState<VisitaAgendada[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(false);
+
+  const carregarDados = async () => {
+    setCarregando(true);
+    setErro(false);
+    try {
+      const [listaJardins, listaVisitas] = await Promise.all([
+        repositorioJardins.listarTodos(),
+        repositorioVisitas.listarTodas(),
+      ]);
+      setJardins(listaJardins);
+      setVisitas(listaVisitas);
+    } catch (falha) {
+      console.error('Falha ao obter dados dos repositórios:', falha);
+      setErro(true);
+    } finally {
+      setCarregando(false);
+    }
+  };
 
   useEffect(() => {
-    const carregarDados = async () => {
-      try {
-        const [listaJardins, listaVisitas] = await Promise.all([
-          repositorioJardins.listarTodos(),
-          repositorioVisitas.listarTodas(),
-        ]);
-        setJardins(listaJardins);
-        setVisitas(listaVisitas);
-      } catch (erro) {
-        console.error('Falha ao obter dados dos repositórios:', erro);
-      } finally {
-        setCarregando(false);
-      }
-    };
-
     carregarDados();
   }, []);
 
@@ -58,67 +64,20 @@ export const PaginaInicio: React.FC = () => {
         aoClicarSecundario={() => navegar('/forum')}
       />
 
-      <section aria-labelledby="titulo-missao">
-        <Cartao destacado>
-          <div style={{ textAlign: 'center', padding: '1rem' }}>
-            <Cracha variante="primaria">Nossa Missão</Cracha>
-            <h2
-              id="titulo-missao"
-              style={{
-                fontFamily: "'Montserrat', sans-serif",
-                fontSize: '1.5rem',
-                fontWeight: 700,
-                color: '#0C5C3E',
-                marginTop: '0.75rem',
-                marginBottom: '0.75rem',
-              }}
-            >
-              Conectando comunidades a jardins medicinais
-            </h2>
-            <p
-              style={{
-                fontSize: '1rem',
-                lineHeight: 1.7,
-                color: '#2E4045',
-                maxWidth: '720px',
-                margin: '0 auto',
-              }}
-            >
-              O Farmácia Viva em Rede é uma plataforma comunitária que facilita o mapeamento
-              de hortos medicinais urbanos, o agendamento de visitas técnicas, a troca de
-              saberes tradicionais e a orientação respaldada por fontes oficiais de saúde.
-              Junte-se a nós para promover saúde natural e fortalecer redes colaborativas
-              na atenção básica.
-            </p>
-          </div>
-        </Cartao>
-      </section>
-
       <section aria-label="Indicadores quantitativos da rede">
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 220px))',
             gap: '1rem',
           }}
         >
           <Cartao>
             <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: '#0C5C3E' }}>
-                {jardins.length}
-              </div>
-              <div style={{ fontSize: '0.85rem', color: '#6B7B80', marginTop: '0.25rem' }}>
-                Jardins Cadastrados
-              </div>
-            </div>
-          </Cartao>
-
-          <Cartao>
-            <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: '#FAA825' }}>
+              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: CORES.acao }}>
                 {jardins.filter((j) => j.aviso_colheita_ativo).length}
               </div>
-              <div style={{ fontSize: '0.85rem', color: '#6B7B80', marginTop: '0.25rem' }}>
+              <div style={{ fontSize: '0.85rem', color: CORES.textoSuave, marginTop: '0.25rem' }}>
                 Colheitas Ativas
               </div>
             </div>
@@ -126,21 +85,10 @@ export const PaginaInicio: React.FC = () => {
 
           <Cartao>
             <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: '#A489C5' }}>
-                {visitas.length}
-              </div>
-              <div style={{ fontSize: '0.85rem', color: '#6B7B80', marginTop: '0.25rem' }}>
-                Visitas Registradas
-              </div>
-            </div>
-          </Cartao>
-
-          <Cartao>
-            <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: '#0C5C3E' }}>
+              <div style={{ fontSize: '2.25rem', fontWeight: 700, color: CORES.primaria }}>
                 {especiesUnicas}
               </div>
-              <div style={{ fontSize: '0.85rem', color: '#6B7B80', marginTop: '0.25rem' }}>
+              <div style={{ fontSize: '0.85rem', color: CORES.textoSuave, marginTop: '0.25rem' }}>
                 Espécies Disponíveis
               </div>
             </div>
@@ -154,7 +102,7 @@ export const PaginaInicio: React.FC = () => {
           id="titulo-mapa-inicio"
           style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: '1.35rem',
+            fontSize: '1.5rem',
             fontWeight: 700,
             marginTop: '0.5rem',
             marginBottom: '1rem',
@@ -163,7 +111,30 @@ export const PaginaInicio: React.FC = () => {
           Jardins Medicinais Próximos de Você
         </h2>
         {carregando ? (
-          <p style={{ color: '#6B7B80' }}>Carregando mapa de jardins...</p>
+          <p style={{ color: CORES.textoSuave }}>Carregando mapa de jardins...</p>
+        ) : erro ? (
+          <div
+            role="alert"
+            style={{
+              padding: '1rem',
+              borderRadius: '8px',
+              backgroundColor: CORES.erroSuave,
+              color: CORES.erro,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '0.75rem',
+            }}
+          >
+            <span>Não foi possível carregar os jardins. Verifique sua conexão e tente novamente.</span>
+            <Botao variante="contorno" tamanho="pequeno" onClick={carregarDados}>
+              Tentar novamente
+            </Botao>
+          </div>
+        ) : jardins.length === 0 ? (
+          <p style={{ color: CORES.textoSuave }}>
+            Nenhum jardim cadastrado ainda. Cadastre o primeiro em "Jardins e Mapeamento".
+          </p>
         ) : (
           <MapaLeaflet
             jardins={jardins}
@@ -179,7 +150,7 @@ export const PaginaInicio: React.FC = () => {
           id="titulo-contato"
           style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: '1.35rem',
+            fontSize: '1.5rem',
             fontWeight: 700,
             marginTop: '0.5rem',
             marginBottom: '1rem',

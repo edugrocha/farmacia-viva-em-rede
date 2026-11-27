@@ -46,7 +46,7 @@ export const WidgetFlutuanteIA: React.FC = () => {
         aria-label={aberto ? 'Fechar assistente de IA' : 'Abrir assistente de IA'}
         style={{
           position: 'fixed',
-          bottom: '1.25rem',
+          bottom: 'calc(1.25rem + env(safe-area-inset-bottom))',
           right: '1.25rem',
           zIndex: 10000,
           width: '56px',
@@ -86,7 +86,7 @@ export const WidgetFlutuanteIA: React.FC = () => {
           aria-label="Assistente de inteligência artificial"
           style={{
             position: 'fixed',
-            bottom: '6.5rem',
+            bottom: 'calc(6.5rem + env(safe-area-inset-bottom))',
             right: '1.25rem',
             zIndex: 10000,
             width: 'min(420px, calc(100vw - 2.5rem))',
@@ -126,7 +126,7 @@ export const WidgetFlutuanteIA: React.FC = () => {
                 background: 'none',
                 border: 'none',
                 color: '#FFFFFF',
-                fontSize: '1.25rem',
+                fontSize: '1.15rem',
                 cursor: 'pointer',
                 lineHeight: 1,
               }}
@@ -151,7 +151,7 @@ export const WidgetFlutuanteIA: React.FC = () => {
                 style={{
                   textAlign: 'center',
                   color: CORES.textoSuave,
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   padding: '1.5rem 0.5rem',
                   lineHeight: 1.6,
                 }}
@@ -195,10 +195,18 @@ export const WidgetFlutuanteIA: React.FC = () => {
                 borderRadius: RAIO_BORDA,
                 border: `1px solid ${CORES.bordaSuave}`,
                 fontFamily: "'Inter', sans-serif",
-                fontSize: '0.9rem',
-                outline: 'none',
-              }}
-            />
+                  fontSize: '1rem',
+                  outline: 'none',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = CORES.primaria;
+                  e.currentTarget.style.boxShadow = `0 0 0 3px ${CORES.primariaSuave}`;
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = CORES.bordaSuave;
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              />
             <button
               type="submit"
               style={{

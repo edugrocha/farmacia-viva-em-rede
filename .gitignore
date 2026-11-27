@@ -1,7 +1,14 @@
 node_modules
-.dist
+dist
 .vite
 .DS_Store
 npm-debug.log*
 coverage
 *.log
+
+# Impeccable (ferramenta local — não versionar)
+.agents/
+.impeccable/
+skills-lock.json
+DESIGN.md
+PRODUCT.md

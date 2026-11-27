@@ -6,6 +6,7 @@ import React from 'react';
 import { Botao } from '../ui/Botao';
 import { Cracha } from '../ui/Cracha';
 import { CORES, RAIO_BORDA, SOMBRAS } from '../../core/tema/tokens';
+import { useIsMobile } from '../../core/tema/useMediaQuery';
 
 export interface SecaoHeroProps {
   totalJardins: number;
@@ -22,6 +23,7 @@ export const SecaoHero: React.FC<SecaoHeroProps> = ({
   aoClicarAcao,
   aoClicarSecundario,
 }) => {
+  const isMobile = useIsMobile();
   const indicadores = [
     { valor: totalJardins, rotulo: 'Jardins Cadastrados', cor: CORES.primaria },
     { valor: totalVisitas, rotulo: 'Visitas Agendadas', cor: CORES.acao },
@@ -34,8 +36,8 @@ export const SecaoHero: React.FC<SecaoHeroProps> = ({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '2rem',
-        padding: '3rem 1.5rem',
+        gap: '2.5rem',
+        padding: isMobile ? '2.5rem 1rem' : '4rem 1.5rem',
         background: `linear-gradient(135deg, ${CORES.primaria} 0%, ${CORES.primariaEscura} 100%)`,
         borderRadius: RAIO_BORDA,
         boxShadow: SOMBRAS.media,
@@ -48,8 +50,10 @@ export const SecaoHero: React.FC<SecaoHeroProps> = ({
           style={{
             fontFamily: "'Montserrat', sans-serif",
             fontWeight: 700,
-            fontSize: '2rem',
-            lineHeight: 1.25,
+            fontSize: isMobile ? '2rem' : 'clamp(2.25rem, 4.5vw, 3.25rem)',
+            lineHeight: 1.1,
+            letterSpacing: '-0.02em',
+            maxWidth: '18ch',
             margin: 0,
           }}
         >
@@ -59,8 +63,8 @@ export const SecaoHero: React.FC<SecaoHeroProps> = ({
           style={{
             fontSize: '1rem',
             lineHeight: 1.7,
-            maxWidth: '720px',
-            opacity: 0.95,
+            maxWidth: '58ch',
+            opacity: 0.9,
             margin: 0,
           }}
         >

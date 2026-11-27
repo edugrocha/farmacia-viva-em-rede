@@ -11,6 +11,7 @@ import { CORES, RAIO_BORDA, SOMBRAS } from '../../core/tema/tokens';
 import { repositorioForum } from '../../data/repositorios';
 import { usarAutenticacao } from '../../core/autenticacao/ContextoAutenticacao';
 import type { TopicoForum } from '../../core/modelos/entidades';
+import { useDialogA11y } from '../../core/tema/useDialogA11y';
 
 export interface ModalCriarTopicoProps {
   aberto: boolean;
@@ -29,6 +30,8 @@ export const ModalCriarTopico: React.FC<ModalCriarTopicoProps> = ({
   const [imagens, setImagens] = useState('');
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
+
+  const dialogRef = useDialogA11y<HTMLDivElement>(aoFechar, aberto);
 
   if (!aberto) return null;
 
@@ -79,6 +82,7 @@ export const ModalCriarTopico: React.FC<ModalCriarTopicoProps> = ({
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="titulo-modal-criar-topico"

@@ -12,6 +12,7 @@ import { CORES, RAIO_BORDA, SOMBRAS } from '../../core/tema/tokens';
 import { repositorioVisitas } from '../../data/repositorios';
 import { usarAutenticacao } from '../../core/autenticacao/ContextoAutenticacao';
 import type { JardimMedicinal, VisitaAgendada } from '../../core/modelos/entidades';
+import { useDialogA11y } from '../../core/tema/useDialogA11y';
 
 export interface ModalAgendarVisitaProps {
   aberto: boolean;
@@ -42,6 +43,8 @@ export const ModalAgendarVisita: React.FC<ModalAgendarVisitaProps> = ({
       setJardimId(jardinsDisponiveis[0].id);
     }
   }, [jardimPreSelecionado, jardinsDisponiveis, aberto]);
+
+  const dialogRef = useDialogA11y<HTMLDivElement>(aoFechar, aberto);
 
   if (!aberto) return null;
 
@@ -88,6 +91,7 @@ export const ModalAgendarVisita: React.FC<ModalAgendarVisitaProps> = ({
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="titulo-modal-agendar-visita"

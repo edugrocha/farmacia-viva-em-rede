@@ -9,6 +9,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { JardimMedicinal } from '../../core/modelos/entidades';
 import { CORES } from '../../core/tema/tokens';
+import { useIsMobile } from '../../core/tema/useMediaQuery';
 import { Botao } from '../ui/Botao';
 import { Cracha } from '../ui/Cracha';
 import { useNavigate } from 'react-router-dom';
@@ -63,6 +64,7 @@ export const MapaLeaflet: React.FC<MapaLeafletProps> = ({
   aoSolicitarVisita,
 }) => {
   const navegar = useNavigate();
+  const isMobile = useIsMobile();
   const [carregandoLocalizacao, setCarregandoLocalizacao] = useState(false);
 
   const coordenadasCentral: [number, number] = coordenadasUsuario
@@ -86,7 +88,7 @@ export const MapaLeaflet: React.FC<MapaLeafletProps> = ({
     <div
       style={{
         position: 'relative',
-        height: altura,
+        height: isMobile ? '380px' : altura,
         width: '100%',
         borderRadius: '8px',
         overflow: 'hidden',
@@ -96,7 +98,7 @@ export const MapaLeaflet: React.FC<MapaLeafletProps> = ({
       <MapContainer
         center={coordenadasCentral}
         zoom={14}
-        scrollWheelZoom={true}
+        scrollWheelZoom={false}
         style={{ height: '100%', width: '100%' }}
         bounds={jardins.length > 0 ? limitesMapa : undefined}
         boundsOptions={{ padding: [40, 40] }}
@@ -130,7 +132,9 @@ export const MapaLeaflet: React.FC<MapaLeafletProps> = ({
               <div
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  minWidth: '240px',
+                  minWidth: isMobile ? '0' : '240px',
+                  maxWidth: '100%',
+                  overflowWrap: 'break-word',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.5rem',
@@ -172,7 +176,7 @@ export const MapaLeaflet: React.FC<MapaLeafletProps> = ({
                     tamanho="pequeno"
                     onClick={() => navegar(`/jardim/${jardim.id}`)}
                   >
-                    Detalhes
+                    Ver Detalhes
                   </Botao>
                 </div>
               </div>
@@ -196,7 +200,7 @@ export const MapaLeaflet: React.FC<MapaLeafletProps> = ({
             boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
           }}
         >
-          Obtendo sua localização...
+            Buscando sua localização...
         </div>
       )}
     </div>

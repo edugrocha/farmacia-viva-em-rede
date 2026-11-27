@@ -8,8 +8,10 @@ import { Rodape } from './Rodape';
 import { WidgetFlutuanteIA } from '../ia/WidgetFlutuanteIA';
 import { WidgetFlutuanteMobile } from '../ui/WidgetFlutuanteMobile';
 import { CORES } from '../../core/tema/tokens';
+import { useIsMobile } from '../../core/tema/useMediaQuery';
 
 export const LayoutBase: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+  const isMobile = useIsMobile();
   return (
     <div
       style={{
@@ -30,10 +32,10 @@ export const LayoutBase: React.FC<{ children?: React.ReactNode }> = ({ children 
           maxWidth: '1280px',
           width: '100%',
           margin: '0 auto',
-          padding: '1.5rem',
+          padding: isMobile ? '1rem' : '1.5rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '2rem',
+          gap: isMobile ? '1.5rem' : '2rem',
         }}
       >
         {children}

@@ -9,6 +9,7 @@ import { Cartao } from '../ui/Cartao';
 import { Botao } from '../ui/Botao';
 import { Cracha } from '../ui/Cracha';
 import { CORES } from '../../core/tema/tokens';
+import { useDialogA11y } from '../../core/tema/useDialogA11y';
 
 export interface ModalLoginProps {
   aberto: boolean;
@@ -18,10 +19,13 @@ export interface ModalLoginProps {
 export const ModalLogin: React.FC<ModalLoginProps> = ({ aberto, aoFechar }) => {
   const { perfisPreConfigurados, autenticarPorPapel } = usarAutenticacao();
 
+  const dialogRef = useDialogA11y<HTMLDivElement>(aoFechar, aberto);
+
   if (!aberto) return null;
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-labelledby="titulo-modal-login"
@@ -76,7 +80,7 @@ export const ModalLogin: React.FC<ModalLoginProps> = ({ aberto, aoFechar }) => {
           </button>
         </div>
 
-        <p style={{ margin: 0, color: CORES.textoSuave, fontSize: '0.9rem' }}>
+        <p style={{ margin: 0, color: CORES.textoSuave, fontSize: '0.85rem' }}>
           Versão MVP: selecione um perfil pré-configurado para acessar o sistema.
         </p>
 

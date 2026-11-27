@@ -23,7 +23,7 @@ export const FormularioContatoExtensionista: React.FC = () => {
     setErro('');
 
     if (!nome.trim() || !email.trim() || !assunto.trim() || !mensagem.trim()) {
-      setErro('Preencha todos os campos.');
+      setErro('Preencha nome, e-mail, assunto e mensagem.');
       return;
     }
 
@@ -60,12 +60,13 @@ export const FormularioContatoExtensionista: React.FC = () => {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.75rem' }}>
-          <CampoEntrada rotulo="Nome *" value={nome} onChange={(e) => setNome(e.target.value)} required />
+          <CampoEntrada rotulo="Nome *" value={nome} onChange={(e) => setNome(e.target.value)} maxLength={120} required />
           <CampoEntrada
             rotulo="E-mail *"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            maxLength={254}
             required
           />
         </div>
@@ -74,6 +75,7 @@ export const FormularioContatoExtensionista: React.FC = () => {
           value={assunto}
           onChange={(e) => setAssunto(e.target.value)}
           placeholder="Ex.: Solicitar mudas, agendar visita técnica..."
+          maxLength={160}
           required
         />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
@@ -88,13 +90,14 @@ export const FormularioContatoExtensionista: React.FC = () => {
             value={mensagem}
             onChange={(e) => setMensagem(e.target.value)}
             rows={4}
+            maxLength={2000}
             required
             style={{
               padding: '0.75rem 1rem',
               borderRadius: RAIO_BORDA,
               border: `1px solid ${CORES.bordaSuave}`,
               fontFamily: "'Inter', sans-serif",
-              fontSize: '0.95rem',
+              fontSize: '1rem',
               resize: 'vertical',
             }}
           />

@@ -14,6 +14,7 @@ import { ModalAgendarVisita } from '../components/visitas/ModalAgendarVisita';
 import { Cartao } from '../components/ui/Cartao';
 import { Cracha } from '../components/ui/Cracha';
 import { Botao } from '../components/ui/Botao';
+import { BrotoBotanico } from '../components/ui/BrotoBotanico';
 import { CampoEntrada } from '../components/ui/CampoEntrada';
 import type { JardimMedicinal } from '../core/modelos/entidades';
 import { calcularDistanciasEOrdenar, obterLocalizacaoAtual, COORDENADAS_PADRAO } from '../services/servicoGeolocalizacao';
@@ -129,7 +130,7 @@ export const PaginaJardins: React.FC = () => {
         </div>
 
         {carregando ? (
-          <p style={{ color: CORES.textoSuave }}>Carregando mapa...</p>
+          <p style={{ color: CORES.textoSuave }}>Carregando mapa de jardins...</p>
         ) : (
           <MapaLeaflet
             jardins={jardins}
@@ -171,7 +172,7 @@ export const PaginaJardins: React.FC = () => {
               style={{
                 padding: '0.75rem 1rem',
                 borderRadius: '8px',
-                border: '1px solid #E0E8E4',
+                border: `1px solid ${CORES.bordaSuave}`,
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '0.95rem',
               }}
@@ -189,7 +190,7 @@ export const PaginaJardins: React.FC = () => {
           id="titulo-lista-mapeamento"
           style={{
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: '1.25rem',
+            fontSize: '1.15rem',
             fontWeight: 700,
             marginBottom: '1rem',
           }}
@@ -207,9 +208,13 @@ export const PaginaJardins: React.FC = () => {
               color: CORES.primaria,
               marginBottom: '1rem',
               fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
             }}
           >
-            {mensagemSucesso}
+            <BrotoBotanico />
+            <span>{mensagemSucesso}</span>
           </div>
         )}
 

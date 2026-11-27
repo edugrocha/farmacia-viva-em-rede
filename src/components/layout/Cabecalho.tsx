@@ -8,9 +8,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { usarAutenticacao } from '../../core/autenticacao/ContextoAutenticacao';
 import { ROTULOS_PAPEIS } from '../../core/autenticacao/permissoes';
 import { CORES, RAIO_BORDA, SOMBRAS } from '../../core/tema/tokens';
+import { useIsMobile } from '../../core/tema/useMediaQuery';
 
 export const Cabecalho: React.FC = () => {
   const localizacao = useLocation();
+  const isMobile = useIsMobile();
   const { usuarioAtivo, perfisPreConfigurados, autenticarPorId, encerrarSessao } = usarAutenticacao();
 
   const itensMenu = [
@@ -40,7 +42,7 @@ export const Cabecalho: React.FC = () => {
         style={{
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: '0.85rem 1.5rem',
+          padding: isMobile ? '0.75rem 1rem' : '0.85rem 1.5rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -71,7 +73,7 @@ export const Cabecalho: React.FC = () => {
               style={{
                 fontFamily: "'Montserrat', sans-serif",
                 fontWeight: 700,
-                fontSize: '1.15rem',
+                fontSize: isMobile ? '1rem' : '1.15rem',
                 color: CORES.primaria,
               }}
             >
@@ -84,7 +86,10 @@ export const Cabecalho: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
-            flexWrap: 'wrap',
+            flexWrap: isMobile ? 'nowrap' : 'wrap',
+            overflowX: isMobile ? 'auto' : 'visible',
+            maxWidth: '100%',
+            paddingBottom: isMobile ? '0.25rem' : 0,
           }}
         >
           {itensMenu.map((item) => (
@@ -93,6 +98,9 @@ export const Cabecalho: React.FC = () => {
               to={item.caminho}
               style={{
                 padding: '0.6rem 0.85rem',
+                minHeight: '44px',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
                 borderRadius: RAIO_BORDA,
                 textDecoration: 'none',
                 fontFamily: "'Inter', sans-serif",
@@ -187,7 +195,7 @@ export const Cabecalho: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                Sair
+                Sair da conta
               </button>
             </div>
           )}
